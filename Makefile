@@ -142,6 +142,11 @@ UPROGS=\
 	$U/_ln\
 	$U/_ls\
 	$U/_mkdir\
+	$U/_sleep\
+	$U/_pingpong\
+	$U/_primes\
+	$U/_find\
+	$U/_xargs\
 	$U/_rm\
 	$U/_sh\
 	$U/_stressfs\
