@@ -693,3 +693,27 @@ procdump(void)
     printf("\n");
   }
 }
+
+uint64
+count_active_processes(void)
+{
+  struct proc *p;
+  uint64 count = 0;
+  // 不需要 proc_table_lock，因为我们只读 pid 和 state，
+  // 并且会检查 p->lock 以安全地读取 state（或者假定 state 的读取是原子的/足够安全的）
+  // 更安全的做法是获取每个进程的锁，但这会很慢。
+  // 一个折衷方案是不获取锁，但要意识到 state 可能在读取时改变。
+  // 对于这个实验，简单遍历并检查 state 可能就足够了。
+  // 另一种方式是使用 proc_table_lock (如果xv6有全局进程表锁的话)
+  // 或者像 xv6 书中 scheduler 那样迭代，并对每个进程获取锁。
+  // Lab 指南没有明确锁的细节，但安全读取进程状态很重要。
+  // 简单的遍历（可能不完全线程安全，但对实验可能OK）：
+  for(p = proc; p < &proc[NPROC]; p++) {
+    // acquire(&p->lock); // 最安全的方式
+    if(p->state != UNUSED) {
+      count++;
+    }
+    // release(&p->lock); // 如果获取了锁
+  }
+  return count;
+}

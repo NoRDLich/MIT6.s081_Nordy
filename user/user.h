@@ -1,5 +1,7 @@
 struct stat;
 struct rtcdate;
+struct proc; // 可能是已有的
+struct sysinfo; // 添加这一行: 预声明 struct sysinfo
 
 // system calls
 int fork(void);
@@ -23,6 +25,7 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+int sysinfo(struct sysinfo *); // 添加这一行
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -63,6 +63,8 @@ void            ramdiskrw(struct buf*);
 void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
+uint64          count_free_memory(void); // 添加原型
+
 
 // log.c
 void            initlog(int, struct superblock*);
@@ -94,6 +96,7 @@ struct cpu*     getmycpu(void);
 struct proc*    myproc();
 void            procinit(void);
 void            scheduler(void) __attribute__((noreturn));
+uint64          count_active_processes(void); 
 void            sched(void);
 void            setproc(struct proc*);
 void            sleep(void*, struct spinlock*);
@@ -138,6 +141,8 @@ int             argaddr(int, uint64 *);
 int             fetchstr(uint64, char*, int);
 int             fetchaddr(uint64, uint64*);
 void            syscall();
+uint64             sys_sysinfo(void); // <-- 加在这里
+
 
 // trap.c
 extern uint     ticks;
